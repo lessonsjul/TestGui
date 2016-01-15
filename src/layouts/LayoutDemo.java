@@ -14,7 +14,7 @@ public abstract class LayoutDemo {
         frame.setVisible(true);
     }
 
-    public JFrame createFrame() {
+    private JFrame createFrame() {
         JFrame frame = new JFrame("demo");
         frame.setSize(470, 450);
         frame.setLocationRelativeTo(null);
