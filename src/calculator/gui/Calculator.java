@@ -1,11 +1,16 @@
-package calculator;
+package calculator.gui;
 
+import calculator.listeners.ButtonsListener;
 import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
+import calculator.listeners.KeyTextFieldsListener;
+import calculator.listeners.TextFieldFocusListener;
 
 import javax.swing.*;
 import java.awt.*;
 
-class Calculator{
+public class Calculator{
+
+    public static final String INPUT_CHISLO = "Введите число";
 
     private JButton btnAdd;
     private JButton btnMinus;
@@ -25,6 +30,8 @@ class Calculator{
     private JPanel panel3;
 
     private JFrame frame;
+
+    private ButtonsListener buttonListener;
 
 
     public static void main(String[] args) throws UnsupportedLookAndFeelException {
@@ -47,6 +54,8 @@ class Calculator{
         btnMinus = new MyJButton("Вычитание");
         btnMulty = new MyJButton("Умножение");
         btnDiv = new MyJButton("Деление");
+
+        addButtonsListeners();
     }
 
     private void createLabels(){
@@ -56,12 +65,14 @@ class Calculator{
     }
 
     private void createTextFields(){
-        jTextNum1 = new MyJTextField(10);
-        jTextNum2 = new MyJTextField(10);
+        jTextNum1 = new MyJTextField(INPUT_CHISLO,10);
+        jTextNum2 = new MyJTextField(INPUT_CHISLO,10);
 
         jTextResult = new MyJTextField(15, Color.RED);
         jTextResult.setFocusable(false);
         jTextResult.setEditable(false);
+
+        addTextFieldsListeners();
     }
 
     private void createPanels(){
@@ -95,5 +106,22 @@ class Calculator{
 
 
         frame.setVisible(true);
+    }
+
+    private void addButtonsListeners(){
+        buttonListener = new ButtonsListener(jTextNum1, jTextNum2,jTextResult);
+
+        btnAdd.addActionListener(buttonListener);
+        btnMinus.addActionListener(buttonListener);
+        btnMulty.addActionListener(buttonListener);
+        btnDiv.addActionListener(buttonListener);
+    }
+
+    private void addTextFieldsListeners(){
+        jTextNum1.addFocusListener(new TextFieldFocusListener(jTextNum1));
+        jTextNum2.addFocusListener(new TextFieldFocusListener(jTextNum2));
+
+        jTextNum1.addKeyListener(new KeyTextFieldsListener());
+        jTextNum2.addKeyListener(new KeyTextFieldsListener());
     }
 }

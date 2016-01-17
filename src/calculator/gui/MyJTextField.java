@@ -1,4 +1,4 @@
-package calculator;
+package calculator.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,9 +7,9 @@ public class MyJTextField extends JTextField{
 
     public MyJTextField(int columns) {
         super(columns);
-        Font font = new Font("Arial",Font.BOLD,14);
+        Font font = new Font("Courier",Font.ITALIC,12);
         super.setFont(font);
-        super.setBackground(Color.GRAY);
+        super.setForeground(Color.GRAY);
     }
 
     public MyJTextField(String text, int columns) {
@@ -19,6 +19,6 @@ public class MyJTextField extends JTextField{
 
     public MyJTextField(int columns, Color color) {
         this(columns);
-        super.setBackground(color);
+        super.setForeground(color);
     }
 }
