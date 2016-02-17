@@ -12,10 +12,6 @@ public class TextFieldsInputVerifier extends InputVerifier{
 
         JTextField textField = (JTextField) input;
 
-        if(textField.getText().equals(Calculator.INPUT_CHISLO)) {
-            return false;
-        }
-
-        return true;
+        return !textField.getText().equals(Calculator.INPUT_CHISLO);
     }
 }

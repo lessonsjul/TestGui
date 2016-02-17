@@ -1,9 +1,12 @@
 package calculator.gui;
 
 import calculator.listeners.ButtonsListener;
+import calculator.listeners.ChangeSkinListener;
 import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
 import calculator.listeners.KeyTextFieldsListener;
 import calculator.listeners.TextFieldFocusListener;
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.mint.MintLookAndFeel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,31 +15,38 @@ public class Calculator{
 
     public static final String INPUT_CHISLO = "Введите число";
 
-    private JButton btnAdd;
-    private JButton btnMinus;
-    private JButton btnMulty;
-    private JButton btnDiv;
+    private MyJButton btnAdd;
+    private MyJButton btnMinus;
+    private MyJButton btnMulty;
+    private MyJButton btnDiv;
+
+    private MyJButton skin1;
+    private MyJButton skin2;
 
     private JLabel labelNum1;
     private JLabel labelNum2;
     private JLabel labelResult;
 
-    private JTextField jTextNum1;
-    private JTextField jTextNum2;
-    private JTextField jTextResult;
+    private MyJTextField jTextNum1;
+    private MyJTextField jTextNum2;
+    private MyJTextField jTextResult;
 
-    private JPanel panel1;
-    private JPanel panel2;
-    private JPanel panel3;
+    private MyJPanel panel1;
+    private MyJPanel panel2;
+    private MyJPanel panel3;
 
     private JFrame frame;
 
     private ButtonsListener buttonListener;
 
 
-    public static void main(String[] args) throws UnsupportedLookAndFeelException {
+    public static void main(String[] args) {
 
-        UIManager.setLookAndFeel(new BernsteinLookAndFeel());
+        try{
+            UIManager.setLookAndFeel(new BernsteinLookAndFeel());
+        }catch(UnsupportedLookAndFeelException ex){
+            ex.printStackTrace();
+        }
 
         JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -47,6 +57,7 @@ public class Calculator{
         calc.createButtons();
         calc.createPanels();
         calc.createFrame();
+        calc.addChangeSkinListener();
     }
 
     private void createButtons(){
@@ -56,6 +67,9 @@ public class Calculator{
         btnDiv = new MyJButton("Деление");
 
         addButtonsListeners();
+
+        skin1 = new MyJButton("Aluminium Skin");
+        skin2 = new MyJButton("Mint Skin");
     }
 
     private void createLabels(){
@@ -65,10 +79,10 @@ public class Calculator{
     }
 
     private void createTextFields(){
-        jTextNum1 = new MyJTextField(INPUT_CHISLO,10);
-        jTextNum2 = new MyJTextField(INPUT_CHISLO,10);
+        jTextNum1 = new MyJTextField(INPUT_CHISLO,20);
+        jTextNum2 = new MyJTextField(INPUT_CHISLO,20);
 
-        jTextResult = new MyJTextField(15, Color.RED);
+        jTextResult = new MyJTextField(20, Color.RED);
         jTextResult.setFocusable(false);
         jTextResult.setEditable(false);
 
@@ -92,12 +106,14 @@ public class Calculator{
 
         panel3.add(labelResult);
         panel3.add(jTextResult);
+        panel3.add(skin1);
+        panel3.add(skin2);
     }
 
     private void createFrame(){
-        frame = new MyJFrame("calculator", 430, 200,new BorderLayout(2, 2));
+        frame = new MyJFrame("calculator", 480, 200,new BorderLayout(2, 2));
 
-        frame.setMinimumSize(new Dimension(430, 200));
+        frame.setMinimumSize(new Dimension(480, 200));
         frame.setResizable(false);
 
         frame.getContentPane().add(panel1, BorderLayout.NORTH);
@@ -123,5 +139,10 @@ public class Calculator{
 
         jTextNum1.addKeyListener(new KeyTextFieldsListener());
         jTextNum2.addKeyListener(new KeyTextFieldsListener());
+    }
+
+    private void addChangeSkinListener(){
+        skin1.addActionListener(new ChangeSkinListener(frame, new AluminiumLookAndFeel()));
+        skin2.addActionListener(new ChangeSkinListener(frame, new MintLookAndFeel()));
     }
 }
